@@ -1,37 +1,17 @@
-class Place {
-  constructor(
-    id,
-    name,
-    type,
-    speciality,
-    governorate,
-    adress,
-    phone,
-    email,
-    website,
-    latitude,
-    longitude,
-    workingHours,
-    description,
-    lat,
-    lng
-  ) {
-    this.id = id;
-    this.name = name;
-    this.type = type;
-    this.speciality = speciality;
-    this.governorate = governorate;
-    this.adress = adress;
-    this.phone = phone;
-    this.email = email;
-    this.website = website;
-    this.latitude = latitude;
-    this.longitude = longitude;
-    this.workingHours = workingHours;
-    this.description = description;
-    this.lat = lat;
-    this.lng = lng;
-  }
-}
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
-module.exports = Place;
+const placeSchema = new Schema({
+  type: { type: String, required: true },
+  name: { type: String, required: true },
+  governorate: { type: String, required: true },
+  address: { type: String, required: true },
+  phone: { type: String, required: true },
+  workingHours: { type: String, required: true },
+  lat: { type: Number, required: true },
+  lng: { type: Number, required: true },
+  description: { type: String, required: true },
+  featured: { type: Boolean, default: false },
+});
+
+module.exports = mongoose.model("Place", placeSchema);
