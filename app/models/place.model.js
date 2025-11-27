@@ -12,6 +12,7 @@ const placeSchema = new Schema({
   lng: { type: Number, required: true },
   description: { type: String, required: true },
   featured: { type: Boolean, default: false },
+  speciality: { type: String, required: true },
 });
 
 module.exports = mongoose.model("Place", placeSchema);

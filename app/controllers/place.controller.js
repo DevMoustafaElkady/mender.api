@@ -35,16 +35,27 @@ exports.addPlace = (req, res) => {
 };
 
 exports.updatePlace = (req, res) => {
-  const placeId = parseInt(req.params.id, 10);
-  const updatedData = req.body;
-  if (updatedPlace) {
-    res.json({ message: "Place updated successfully", data: updatedPlace });
-  } else {
-    res.status(404).json({ message: "Place not found" });
-  }
+  Place.findByIdAndUpdate(req.params.id, req.body, { new: true })
+    .then((updatedPlace) => {
+      if (updatedPlace) {
+        res
+          .status(200)
+          .json({ message: "Place updated successfully", data: updatedPlace });
+      } else {
+        res.status(404).json({ message: "Place not found" });
+      }
+    })
+    .catch((err) => {
+      res.status(500).json({ message: "Error updating place", error: err });
+    });
 };
 
 exports.deletePlace = (req, res) => {
-  const placeId = parseInt(req.params.id, 10);
-  res.status(200).json({ message: "Place deleted successfully" });
+  Place.findByIdAndDelete(req.params.id)
+    .then(() => {
+      res.status(200).json({ message: "Place deleted successfully" });
+    })
+    .catch((err) => {
+      res.status(500).json({ message: "Error deleting place", error: err });
+    });
 };
