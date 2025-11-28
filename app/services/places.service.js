@@ -16,6 +16,14 @@ exports.addPlace = (placeData) => {
   return newPlace.save();
 };
 
+// update place
+exports.updatePlace = (id, placeData) => {
+  return Place.findByIdAndUpdate(id, placeData, { new: true });
+};
 
+// delete place
+exports.deletePlace = (id) => {
+  return Place.findByIdAndDelete(id);
+};
 
 
