@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const placeSchema = new Schema({
+const placeRequestSchema = new Schema({
   type: { type: String, required: true },
   name: { type: String, required: true },
   governorate: { type: String, required: true },
@@ -13,6 +13,11 @@ const placeSchema = new Schema({
   description: { type: String, required: false },
   featured: { type: Boolean, default: false },
   speciality: { type: String, required: true },
+  status: {
+    type: String,
+    enum: ["pending", "approved", "rejected"],
+    default: "pending",
+  },
 });
 
-module.exports = mongoose.model("Place", placeSchema);
+module.exports = mongoose.model("PlaceRequest", placeRequestSchema);

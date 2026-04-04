@@ -1,8 +1,10 @@
 const placeSchemaValidator = require("../validators/place.validators");
+const placeRequestSchemaValidator = require("../validators/place-request.validators");
 // const placesService = require("../services/places.service");
 const Place = require("../models/place.model");
 const placeService = require("../services/places.service");
 
+// Get all places
 exports.getAllPlaces = (req, res) => {
   placeService
     .getAllPlaces()
@@ -14,6 +16,7 @@ exports.getAllPlaces = (req, res) => {
     });
 };
 
+// Get a place by ID
 exports.GetPlaceById = (req, res) => {
   placeService
     .getPlaceByID(req.params.id)
@@ -29,6 +32,7 @@ exports.GetPlaceById = (req, res) => {
     });
 };
 
+// Add a new place
 exports.addPlace = (req, res) => {
   // Validate the request body
   const error = placeSchemaValidator.validate(req.body).error;
@@ -51,6 +55,7 @@ exports.addPlace = (req, res) => {
     });
 };
 
+// Add a new place request
 exports.updatePlace = (req, res) => {
   // Validate the request body
   const error = placeSchemaValidator.validate(req.body).error;
@@ -77,6 +82,7 @@ exports.updatePlace = (req, res) => {
     });
 };
 
+// Delete a place
 exports.deletePlace = (req, res) => {
   placeService
     .deletePlace(req.params.id)
@@ -91,3 +97,32 @@ exports.deletePlace = (req, res) => {
       res.status(500).json({ message: "Error deleting place", error: err });
     });
 };
+
+// Get all places
+exports.getAllPlaceRequests = (req, res) => {
+  placeService
+    .getAllPlacesRequests()
+    .then((placeRequests) => {
+      res.status(200).json({ data: placeRequests });
+    })
+    .catch((err) => {
+      res.status(500).json({ message: "Error retrieving place requests", error: err });
+    });
+};
+
+// Add a new Place Request
+exports.addPlaceRequest = (req, res) => {
+  // Validate the request body
+  const error = placeRequestSchemaValidator.validate(req.body).error;
+  if (error) {
+    return res.status(400).json({message: "Validation Error", error: error.details});
+  }
+
+  placeService.addPlaceRequest(req.body)
+    .then((newPlaceRequest) => {
+      res.status(201).json({message: "Place request added successfully", data: newPlaceRequest});
+    })
+    .catch((err) => {
+      res.status(500).json({message: "Error adding place request", error: err});
+    });
+  }

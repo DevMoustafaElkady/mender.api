@@ -1,4 +1,5 @@
 const Place = require("../models/place.model");
+const PlaceRequest = require("../models/place-request.model");
 
 // get all places method
 exports.getAllPlaces = () => {
@@ -25,5 +26,16 @@ exports.updatePlace = (id, placeData) => {
 exports.deletePlace = (id) => {
   return Place.findByIdAndDelete(id);
 };
+
+// get all places method
+exports.getAllPlacesRequests = () => {
+  return PlaceRequest.find();
+};
+
+// add place request
+exports.addPlaceRequest = (placeRequestData) => {
+  const newPlaceRequest = new PlaceRequest(placeRequestData);
+  return newPlaceRequest.save();
+}
 
 
