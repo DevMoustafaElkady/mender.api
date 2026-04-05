@@ -106,7 +106,9 @@ exports.getAllPlaceRequests = (req, res) => {
       res.status(200).json({ data: placeRequests });
     })
     .catch((err) => {
-      res.status(500).json({ message: "Error retrieving place requests", error: err });
+      res
+        .status(500)
+        .json({ message: "Error retrieving place requests", error: err });
     });
 };
 
@@ -115,14 +117,40 @@ exports.addPlaceRequest = (req, res) => {
   // Validate the request body
   const error = placeRequestSchemaValidator.validate(req.body).error;
   if (error) {
-    return res.status(400).json({message: "Validation Error", error: error.details});
+    return res
+      .status(400)
+      .json({ message: "Validation Error", error: error.details });
   }
 
-  placeService.addPlaceRequest(req.body)
+  placeService
+    .addPlaceRequest(req.body)
     .then((newPlaceRequest) => {
-      res.status(201).json({message: "Place request added successfully", data: newPlaceRequest});
+      res
+        .status(201)
+        .json({
+          message: "Place request added successfully",
+          data: newPlaceRequest,
+        });
     })
     .catch((err) => {
-      res.status(500).json({message: "Error adding place request", error: err});
+      res
+        .status(500)
+        .json({ message: "Error adding place request", error: err });
     });
-  }
+};
+
+// Approve Place Request
+exports.approvePlaceRequest = (req, res) => {
+  placeService
+    .approvePlaceRequest(req.params.id)
+    .then((approvedPlace) => {
+      res
+        .status(200)
+        .json({ message: "Place request approved successfully", data: approvedPlace });
+    })
+    .catch((err) => {
+      res
+        .status(500)
+        .json({ message: "Error approving place request", error: err });
+    });
+};

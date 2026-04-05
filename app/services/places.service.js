@@ -39,3 +39,34 @@ exports.addPlaceRequest = (placeRequestData) => {
 }
 
 
+// Approve Place Request
+exports.approvePlaceRequest = (id) => {
+  return PlaceRequest.findById(id).then((placeRequest) => {
+    if (!placeRequest) {
+      throw new Error("Place request not found");
+    }
+
+    // Create a new place based on the approved request
+    const newPlace = new Place({
+      type: placeRequest.type,
+      name: placeRequest.name,
+      governorate: placeRequest.governorate,
+      address: placeRequest.address,
+      phone: placeRequest.phone,
+      workingHours: placeRequest.workingHours,
+      lat: placeRequest.lat,
+      lng: placeRequest.lng,
+      description: placeRequest.description,
+      featured: placeRequest.featured,
+      speciality: placeRequest.speciality,
+    });
+
+    // Save the new place and update the request status
+    return newPlace.save().then((savedPlace) => {
+      placeRequest.status = "approved";
+      return placeRequest.save().then(() => savedPlace);
+    });
+  });
+}
+
+
