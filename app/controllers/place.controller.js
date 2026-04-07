@@ -125,12 +125,10 @@ exports.addPlaceRequest = (req, res) => {
   placeService
     .addPlaceRequest(req.body)
     .then((newPlaceRequest) => {
-      res
-        .status(201)
-        .json({
-          message: "Place request added successfully",
-          data: newPlaceRequest,
-        });
+      res.status(201).json({
+        message: "Place request added successfully",
+        data: newPlaceRequest,
+      });
     })
     .catch((err) => {
       res
@@ -146,7 +144,10 @@ exports.approvePlaceRequest = (req, res) => {
     .then((approvedPlace) => {
       res
         .status(200)
-        .json({ message: "Place request approved successfully", data: approvedPlace });
+        .json({
+          message: "Place request approved successfully",
+          data: approvedPlace,
+        });
     })
     .catch((err) => {
       res

@@ -1,20 +1,20 @@
-const joi = require("joi");
+const Joi = require("joi");
 
-// Define the schema for place validation
-const placeSchema = joi.object({
-  type: joi.string().required(),
-  name: joi.string().required(),
-  governorate: joi.string().required(),
-  address: joi.string().required(),
-  phone: joi.string().required(),
-  workingHours: joi.string().required(),
-  lat: joi.number().required(),
-  lng: joi.number().required(),
-  description: joi.string().required(),
-  featured: joi.boolean(),
-  speciality: joi.string().required(),
-  status: joi.string().valid("pending", "approved", "rejected").default("pending"),
+const placeSchema = Joi.object({
+  type: Joi.string().required(),
+  name: Joi.string().required(),
+  governorate: Joi.string().required(),
+  address: Joi.string().required(),
+  phone: Joi.array().items(Joi.string().required()).min(1).required(),
+  workingHours: Joi.string().required(),
+  lat: Joi.number().required(),
+  lng: Joi.number().required(),
+  description: Joi.string().required(),
+  featured: Joi.boolean(),
+  speciality: Joi.string().required(),
+  status: Joi.string()
+    .valid("pending", "approved", "rejected")
+    .default("pending"),
 });
-
 
 module.exports = placeSchema;

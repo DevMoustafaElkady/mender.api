@@ -6,7 +6,7 @@ const placeRequestSchema = new Schema({
   name: { type: String, required: true },
   governorate: { type: String, required: true },
   address: { type: String, required: true },
-  phone: { type: String, required: true },
+  phone: [String],
   workingHours: { type: String, required: true },
   lat: { type: Number, required: true },
   lng: { type: Number, required: true },
