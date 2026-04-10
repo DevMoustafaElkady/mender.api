@@ -25,6 +25,7 @@ app.use(express.json());
 
 // Routes
 app.use("/places", require("./app/routes/place.routes"));
+app.use("/blog", require("./app/routes/blog.routes"))
 
 // Start the server
 app.listen(port, () => {
